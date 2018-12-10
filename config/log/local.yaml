@@ -1,0 +1,17 @@
+level: "debug"
+encoding: "console"
+encoderConfig:
+  timeKey: "time"
+  levelKey: "level"
+  nameKey: "name"
+  callerKey: "caller"
+  messageKey: "message"
+  levelEncoder: "lowerCapital"
+  timeEncoder: "iso8601"
+  durationEncoder: "string"
+  callerEncoder: "short"
+disableStacktrace: false
+outputPaths:
+  - "stdout"
+errorOutputPaths:
+  - "stderr"

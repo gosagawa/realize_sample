@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+import "google/api/annotations.proto";
+
+package proto;
+option go_package = "github.com/gosagawa/realize_sample/adapter/grpc/proto";
+
+service UserService {
+    rpc Get(GetUserRequest) returns (User) {
+        option (google.api.http) = {
+            get: "/user/{id}"
+        };
+    }
+}
+
+message GetUserRequest {
+  int32 id = 1;
+}
+
+message User {
+    int32 id = 1;
+    string name = 2;
+    int32 age = 3;
+}

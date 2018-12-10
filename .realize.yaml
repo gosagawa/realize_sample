@@ -1,0 +1,43 @@
+settings:
+  legacy:
+    force: false
+    interval: 0s
+schema:
+- name: server
+  path: .
+  commands:
+    install:
+      status: true
+      dir: cmd/grpc-server
+    run:
+      status: true
+      method: /go/bin/grpc-server
+  watcher:
+    extensions:
+    - go
+    paths:
+    - /
+    ignored_paths:
+    - .git
+    - .realize
+    - vendor
+- name: gateway
+  path: .
+  commands:
+    install:
+      status: true
+      dir: cmd/grpc-gateway
+    run:
+      status: true
+      method: /go/bin/grpc-gateway
+  args:
+  - --endpoint=app:4000
+  watcher:
+    extensions:
+    - go
+    paths:
+    - /
+    ignored_paths:
+    - .git
+    - .realize
+    - vendor

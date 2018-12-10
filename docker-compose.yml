@@ -1,0 +1,34 @@
+# docker-compose.yml
+version: '3'
+services:
+  app:
+    build: docker/go
+    working_dir: "/go/src/github.com/gosagawa/realize_sample"
+    environment:
+      - APP_ENV=local
+    volumes:
+      - $GOPATH/src:/go/src
+    command: bash -c "realize start --name='server' --run"
+    network_mode: "bridge"
+  gateway:
+    build: docker/go
+    working_dir: "/go/src/github.com/gosagawa/realize_sample"
+    environment:
+      - VIRTUAL_HOST=local.realize_sample.net
+      - VIRTUAL_PORT=3000
+      - APP_ENV=local
+    volumes:
+      - $GOPATH/src:/go/src
+    expose:
+      - "3000"
+    command: bash -c "realize start --name='gateway' --run"
+    network_mode: "bridge"
+    links:
+      - app
+  proxy:
+    image: jwilder/nginx-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    network_mode: "bridge"
